@@ -1,0 +1,19 @@
+{
+  "name": "devis-clair",
+  "version": "0.1.0",
+  "description": "Devis Clair · par MB Explain : une fiche explicative claire et imprimable pour accompagner un devis, 100 % locale dans le navigateur.",
+  "private": true,
+  "license": "MIT",
+  "author": "MTM2904",
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "axe-core": "4.11.0",
+    "playwright": "1.63.0"
+  }
+}

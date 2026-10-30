@@ -1,0 +1,24 @@
+# Dépendances et résultats de tests
+node_modules/
+test-results/
+playwright-report/
+coverage/
+
+# Fiches exportées : elles peuvent contenir des données de clients
+*.pdf
+
+# Environnement et secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Systèmes et éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.log
+npm-debug.log*

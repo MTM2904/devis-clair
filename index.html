@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Devis Clair transforme les éléments d'un devis en fiche explicative claire, imprimable, sans compte ni serveur.">
+  <title>Devis Clair · par MB Explain</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#apercu">Aller à l'aperçu de la fiche</a>
+
+  <header class="site-header">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect x="7" y="4" width="26" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M13 14h14M13 20h14M13 26h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="29" cy="29" r="7" class="brand-dot"/>
+        <path d="M26 29l2.2 2.2L32.5 27" fill="none" class="brand-check" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="brand-text">
+        <span class="brand-name">Devis Clair</span>
+        <span class="brand-sep" aria-hidden="true">·</span>
+        <span class="brand-by">par MB Explain</span>
+      </p>
+    </div>
+    <p class="site-tagline">Une fiche simple pour expliquer un devis à votre client.</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel panel-form" aria-labelledby="titre-formulaire">
+      <div class="panel-head">
+        <h1 id="titre-formulaire">Préparer la fiche</h1>
+        <p class="lead">Une ligne = un point. La fiche se met à jour pendant la saisie. Rien n'est envoyé ni enregistré&nbsp;: tout reste dans cet onglet.</p>
+        <div class="actions" role="group" aria-label="Contenu du formulaire">
+          <button type="button" class="btn btn-secondary" id="btn-exemple">Charger l'exemple fictif</button>
+          <button type="button" class="btn btn-ghost" id="btn-vider">Formulaire vide</button>
+        </div>
+      </div>
+
+      <p class="notice notice-example" id="notice-exemple" hidden>
+        <strong>Exemple fictif chargé.</strong> La mention «&nbsp;Exemple fictif&nbsp;» restera sur la fiche, même si vous modifiez le texte. Pour votre propre devis, repartez d'un formulaire vide.
+      </p>
+
+      <div class="error-summary" id="resume-erreurs" tabindex="-1" hidden>
+        <h2 class="error-summary-title">La fiche ne peut pas encore être imprimée</h2>
+        <ul id="liste-erreurs"></ul>
+      </div>
+
+      <form id="formulaire" novalidate>
+        <fieldset class="group">
+          <legend>Le projet</legend>
+          <div class="field">
+            <label for="titre">Titre du projet <span class="required">(obligatoire)</span></label>
+            <p class="hint" id="titre-aide">Par exemple&nbsp;: Rénovation de la salle de bains. 150 caractères au maximum.</p>
+            <input type="text" id="titre" name="titre" maxlength="150" autocomplete="off" aria-describedby="titre-aide titre-erreur" required>
+            <p class="field-error" id="titre-erreur" hidden></p>
+          </div>
+          <div class="field">
+            <label for="reference">Référence du devis <span class="optional">(facultatif)</span></label>
+            <p class="hint" id="reference-aide">Le numéro tel qu'il figure sur votre devis. 60 caractères au maximum.</p>
+            <input type="text" id="reference" name="reference" maxlength="60" autocomplete="off" aria-describedby="reference-aide">
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Le contenu du devis</legend>
+          <div class="field">
+            <label for="inclus">Prestations incluses</label>
+            <p class="hint" id="inclus-aide">Ce que le devis comprend, une prestation par ligne.</p>
+            <textarea id="inclus" name="inclus" rows="5" aria-describedby="inclus-aide"></textarea>
+          </div>
+          <div class="field">
+            <label for="options">Options</label>
+            <p class="hint" id="options-aide">Ce que le client peut ajouter s'il le souhaite.</p>
+            <textarea id="options" name="options" rows="3" aria-describedby="options-aide"></textarea>
+          </div>
+          <div class="field">
+            <label for="exclusions">Exclusions</label>
+            <p class="hint" id="exclusions-aide">Ce qui n'est pas compris, pour éviter les malentendus.</p>
+            <textarea id="exclusions" name="exclusions" rows="3" aria-describedby="exclusions-aide"></textarea>
+          </div>
+          <div class="field">
+            <label for="confirmer">Points restant à confirmer</label>
+            <p class="hint" id="confirmer-aide">Les choix ou informations encore en attente.</p>
+            <textarea id="confirmer" name="confirmer" rows="3" aria-describedby="confirmer-aide"></textarea>
+          </div>
+          <div class="field">
+            <label for="etapes">Prochaines étapes</label>
+            <p class="hint" id="etapes-aide">Dans l'ordre, une étape par ligne. Elles seront numérotées.</p>
+            <textarea id="etapes" name="etapes" rows="4" aria-describedby="etapes-aide"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="form-footer">
+          <button type="submit" class="btn btn-primary">Imprimer ou enregistrer en PDF</button>
+          <a class="btn btn-ghost mobile-only" href="#apercu">Voir l'aperçu</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel panel-preview" id="apercu" tabindex="-1" aria-labelledby="titre-apercu">
+      <div class="preview-head">
+        <h2 id="titre-apercu">Aperçu de la fiche</h2>
+        <button type="button" class="btn btn-primary btn-small" id="btn-imprimer">Imprimer</button>
+      </div>
+      <p class="hint preview-hint">Dans la fenêtre d'impression, choisissez «&nbsp;Enregistrer au format PDF&nbsp;» pour obtenir un fichier.</p>
+      <noscript>
+        <p class="notice">L'aperçu a besoin de JavaScript, activé dans la plupart des navigateurs. Devis Clair n'utilise JavaScript que dans votre navigateur, sans rien envoyer.</p>
+      </noscript>
+      <div class="sheet-frame">
+        <article class="sheet" id="fiche" aria-label="Fiche explicative">
+          <!-- Rempli par assets/app.js, uniquement avec textContent. Pas de aria-live : la fiche change à chaque frappe et serait lue en boucle. -->
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Devis Clair fonctionne entièrement dans votre navigateur&nbsp;: aucun compte, aucun serveur, aucun suivi. <a href="https://github.com/MTM2904/devis-clair" rel="noopener noreferrer">Code source (licence MIT)</a></p>
+  </footer>
+
+  <dialog class="dialog" id="confirmation" aria-labelledby="confirmation-titre" aria-describedby="confirmation-texte">
+    <form method="dialog">
+      <h2 id="confirmation-titre">Remplacer la saisie&nbsp;?</h2>
+      <p id="confirmation-texte">Le texte déjà saisi sera effacé. Cette action ne peut pas être annulée.</p>
+      <div class="dialog-actions">
+        <button type="submit" value="annuler" class="btn btn-ghost" id="confirmation-annuler">Annuler</button>
+        <button type="submit" value="ok" class="btn btn-primary" id="confirmation-ok">Remplacer</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
